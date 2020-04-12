@@ -1,1 +1,86 @@
-[]
+[
+    {
+        "name": "Administrator",
+        "color": "FF5555",
+        "people": [
+            {
+                "name": "TheMrGong",
+                "uuid": "91b9be25-b0e4-46a8-af3c-f41f01a801f5",
+                "role": "Finances"
+            },
+            {
+                "name": "15Ibans",
+                "uuid": "eaa2b50e-e4c9-43b9-8e60-35195b3d12be",
+                "role": "General Management"
+            },
+            {
+                "name": "1CreeperStorm",
+                "uuid": "55e290aa-e5a5-479b-ba5f-fe80c4205d7e",
+                "role": "Community Managment"
+            },
+            {
+                "name": "martinminecraft1",
+                "uuid": "538a9cbe-9b64-4020-a90f-2a277c5c299c",
+                "role": "Staff Management"
+            }
+        ]
+    },
+    {
+        "name": "Developer",
+        "color": "FFAA00",
+        "people": [
+            {
+                "name": "WesJD",
+                "uuid": "7f3785e8-05e8-4864-8f80-f993c57e669b",
+                "role": "Web & Backend"
+            },
+            {
+                "name": "TheMrGong",
+                "uuid": "91b9be25-b0e4-46a8-af3c-f41f01a801f5",
+                "role": "Ingame Content"
+            },
+            {
+                "name": "15Ibans",
+                "uuid": "eaa2b50e-e4c9-43b9-8e60-35195b3d12be",
+                "role": "Ingame Content"
+            }
+        ]
+    },
+    {
+        "name": "Moderator",
+        "color": "5555FF",
+        "people": [
+            {
+                "name": "Bluswimmer2",
+                "uuid": "6724b07c-a44a-40b0-a16b-11268e3a6546"
+            },
+            {
+                "name": "Mallow",
+                "uuid": "3749b76a-2797-4818-9078-bcdb4e4f84de"
+            },
+            {
+                "name": "AHHHdam",
+                "uuid": "c5d7e7a3-ce11-483c-a9b2-40b915c136f6"
+            },
+            {
+                "name": "xchippy",
+                "uuid": "93033064-d061-4846-a707-868dfd2d7c0f"
+            }
+        ]
+    },
+    {
+        "name": "Quality Assurance",
+        "color": "FFFF55",
+        "people": [
+            {
+                "name": "wersty",
+                "uuid": "f168f420-2a62-4bf6-908e-680456afda59",
+                "role": "QA Manager"
+            },
+            {
+                "name": "Frogsterr",
+                "uuid": "99f1ca10-69b7-4fdf-b9f9-e85ee9ebd3b7"
+            }
+        ]
+    }
+]

@@ -1,0 +1,25 @@
+.team {
+    margin-top: 4%;
+}
+
+.members {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.member {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.head {
+    padding-bottom: 5%;
+}
+
+.head img {
+    max-width: 115px;
+    border-radius: 5px;
+}

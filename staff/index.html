@@ -1,0 +1,24 @@
+---
+layout: default
+title: Staff
+---
+
+<div class="container">
+    {% for team in site.data.staff %}
+    <div class="team">
+        <h1>{{ team.name }}</h1>
+        <hr>
+        <div class="members">
+            {% for member in team.people %}
+            <div class="member">
+                <div class="head">
+                    <img src="https://crafatar.com/avatars/{{ member.uuid }}" alt="Head">
+                </div>
+                <h3 class="name">{{ member.name }}</h3>
+                <h6 class="text-secondary text-center">{{ member.role }}</h6>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
