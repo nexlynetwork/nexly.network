@@ -1,0 +1,39 @@
+---
+layout: default
+title: Home
+---
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Nexly Network</h1>
+        <p>Your most beloved gamemodes finally maintained.</p>
+        <button type="button" class="btn btn-primary"
+            onclick="document.getElementById('ip').select(); document.execCommand('copy');">
+            <i class="fas fa-copy"></i>
+            nexly.network
+        </button>
+    </div>
+</div>
+<div id="announcements">
+    <div class="container">
+        <span id="announcement_header">Latest Announcements:</span>
+        {% for post in site.posts limit:3 %}
+        <a class="announcement" href="{{ post.url }}">{{ post.title | truncatewords: 3 }}</a>
+        {% endfor %}
+    </div>
+</div>
+<div id="about" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>About Us</h4>
+            <p>Originally marketed as "BetterCade", Nexly was started as simple remake of the popular Super Craft
+                Brothers gamemode. Quickly gaining enourmous support, Nexly proceeded to turn into a multi-server
+                network supporting other gamemodes like McTheWalls.</p>
+        </div>
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" height="150" alt="Nexly Network" class="text-center">
+        </div>
+    </div>
+</div>
+
+<input value="nexly.network" id="ip" type="text" style="visibility: hidden;">
