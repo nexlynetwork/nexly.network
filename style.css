@@ -6,6 +6,11 @@
     margin-bottom: 0;
 }
 
+.jumbotron .container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
 .jumbotron h1 {
     font-size: 7rem;
     font-weight: bold;
