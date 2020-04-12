@@ -1,3 +1,7 @@
 .post-area {
     margin-top: 2%;
 }
+
+.post-area img {
+    max-width: 100%;
+}
