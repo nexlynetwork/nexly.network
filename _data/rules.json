@@ -1,0 +1,39 @@
+{
+    "Global Rules": {
+        "Hacking": "The use of a mod/client to give yourself an unfair advantage in game. Examples include, aim assist, misplace, damage indicators, flight, killaura, xray, radar, etc. (While an xray texture pack is not a 'mod' it is still a feature that cannot be obtained in game and is thus also against the rules)",
+        "Unapproved Mods": "The use of a mod that is not on the whitelist. If a mod is not on the whitelist consider it unapproved. DM an admin if you’d like a mod to be added to the whitelist. MOST COSMETIC MODS ARE OKAY. PLEASE ASK A MODERATOR IF YOU’RE EVER UNSURE AND USE AT YOUR OWN RISK.",
+        "Glitch Exploiting": "Abusing a glitch to give yourself an unfair advantage. If a glitch is discovered report it to a staff member.",
+        "Map Exploiting": "Going to/camping in any area of a map that is not reachable by normal means: using enderpearls on SSB maps to get to areas that are otherwise inaccessible, etc.",
+        "Inappropriate Names/Skins": "Having a naked/racist/discriminatory/generally inappropriate skin. If your name violates one of the chat rules, consider it unapproved.",
+        "Purposely ruining the experience for others": "Examples include, misleading other players in chat, using SSB classes to excessively run/camp, trolling, purposely wasting staff member’s time, etc.",
+        "Ban/Mute Evasion": "Attempting to evade a ban or a mute by using signs, alt accounts or vpns. If you are punished on one account, the punishment will apply on all others as well.",
+        "Chargebacks": "Charging back money spent on ranks or other server-related items.",
+        "Compromised Accounts": "Using stolen accounts on the network. If you got your account from an alt shop or an alt list there’s a good chance that it falls under this category.",
+        "Macros": "Macros used to make ingame tasks more efficient are not allowed. This includes auto-clickers.(chat macros are allowed as long as they’re not used to spam)",
+        "Spam": "This applies to excessive character/emoji spam, chat flooding and sending many similar/short messages in a short period of time. Messages sent in all caps are normally fine but may be warned for if used excessively.",
+        "Swearing/Flaming": "Messages that are deliberately hostile towards other players or the general use of swear words on the network.",
+        "Inappropriate Chat/Posts": "Sexual or general adult references are not acceptable on the network.",
+        "Racial/Homophobic Slurs": "The usage of slurs with no discriminatory implications.",
+        "Hate Speech": "Posting hateful or discriminatory messages regardless of context.",
+        "Death Wishes": "Wishing death upon another player/suicidal encouragement.",
+        "Threats": "Threatening another player for personal gain and/or to intimidate. Includes; DDoS/DoS threats, death threats, etc.",
+        "Advertising (light)": "Saying server names by themselves is fine (eg: “I like the Minecade network”) however encouraging someone to join a server is not: “who wants to play Minecade with me?”",
+        "Advertising (heavy)": "Posting non-Nexly related links or posting a server ip in chat or on the forums. (images or videos of the nexly network are fine)",
+        "Harassment": "Excessively messaging, stalking or being overly aggressive towards a player.",
+        "Encouraging Rule-Breaking": "Egging someone on or telling someone about a glitch they can exploit would be considered encouraging rule-breaking.",
+        "Player Disrespect": "Blatant disrespect directed towards players. You’re not expected to love every player you come across on the network but show common decency and respect all users even if they do not show respect in return.",
+        "Staff Disrespect": "Blatant disrespect directed towards a staff member. Staff are people too, and deserve to be treated as such. If you disagree with a decision made by a staff member you may calmly discuss it with them or report them to an admin."
+    },
+    "Discord Rules": {
+        "Spam-tagging staff or other users": "Please only ping a user once, they’ll see it. There is no need to ping someone multiple times to get their attention.",
+        "Stick to Channel Topics": "Do your best to stick to channel topics. This won’t be excessively enforced, but it’s greatly appreciated if you try to keep everything organized.",
+        "Being disruptive to other users in voice chat": "Please don’t use soundboards to play obnoxious or loud noises, or just generally be a nuisance in the voice chat.",
+        "Inappropriate/Rude Reactions/Emojis": "Using emojis/reactions in an inappropriate manner."
+    },
+    "The Walls Rules": {
+        "Inappropriate Builds": "Building anything that would be considered against the rules. This includes sexual, racist or discriminatory builds.",
+        "Team Killing": "Using TNT or any other means to kill one of your teammates.",
+        "Playing Against Team": "Griefing, stealing or cross-teaming.",
+        "Combat Logging": "Logging out mid-combat to avoid dying/fall damage."
+    }
+}

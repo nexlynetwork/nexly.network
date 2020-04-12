@@ -1,0 +1,17 @@
+---
+layout: default
+title: Rules
+---
+
+<div class="container">
+    {% for section in site.data.rules %}
+    <div class="section">
+        <h1>{{ section | first }}</h1>
+        <hr>
+        {% for rule in section.last %}
+        <h5 class="text-danger">✗ {{ rule.first }}</h5>
+        <h6 class="subtitle mb-2">{{ rule.last }}</h6>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
