@@ -51,19 +51,11 @@
         "color": "5555FF",
         "people": [
             {
-                "name": "Bluswimmer2",
-                "uuid": "6724b07c-a44a-40b0-a16b-11268e3a6546"
-            },
-            {
                 "name": "chronoforce",
                 "uuid": "cfdefe2c-5393-49d5-9f7b-9648d62794af"
             },
             {
-                "name": "Mallow",
-                "uuid": "3749b76a-2797-4818-9078-bcdb4e4f84de"
-            },
-            {
-                "name": "AHHHdam",
+                "name": "TheElementalBros",
                 "uuid": "c5d7e7a3-ce11-483c-a9b2-40b915c136f6"
             },
             {
@@ -80,10 +72,6 @@
                 "name": "wersty",
                 "uuid": "f168f420-2a62-4bf6-908e-680456afda59",
                 "role": "QA Manager"
-            },
-            {
-                "name": "Frogsterr",
-                "uuid": "99f1ca10-69b7-4fdf-b9f9-e85ee9ebd3b7"
             }
         ]
     }
