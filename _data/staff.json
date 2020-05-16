@@ -55,6 +55,14 @@
                 "uuid": "cfdefe2c-5393-49d5-9f7b-9648d62794af"
             },
             {
+                "name": "Dyllan",
+                "uuid": "0074cd05-c7f2-4b34-b8e9-f59ff2f9c49a"
+            },
+            {
+                "name": "Nostalogica",
+                "uuid": "96fccae3-fc49-43ca-866b-0fab8ec97ad0"
+            },
+            {
                 "name": "TheElementalBros",
                 "uuid": "c5d7e7a3-ce11-483c-a9b2-40b915c136f6"
             },
@@ -68,6 +76,22 @@
         "name": "Quality Assurance",
         "color": "FFFF55",
         "people": [
+            {
+                "name": "Bluswimmer2",
+                "uuid": "6724b07c-a44a-40b0-a16b-11268e3a6546"
+            },
+            {
+                "name": "CreativeSpell",
+                "uuid": "96fccae3-fc49-43ca-866b-0fab8ec97ad0"
+            },
+            {
+                "name": "Grant_Minecraft",
+                "uuid": "d96b5fa1-d791-4fb4-be7c-475586c8a828"
+            },
+            {
+                "name": "kolyaaa",
+                "uuid": "93a12f9b-aa2a-47d5-be3c-b850ac54b448"
+            },
             {
                 "name": "wersty",
                 "uuid": "f168f420-2a62-4bf6-908e-680456afda59",
