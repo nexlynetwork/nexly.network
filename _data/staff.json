@@ -42,6 +42,20 @@
         ]
     },
     {
+        "name": "Junior Developer",
+        "color": "FFAA00",
+        "people": [
+            {
+                "name": "Bluswimmer2",
+                "uuid": "6724b07c-a44a-40b0-a16b-11268e3a6546"
+            },
+            {
+                "name": "Metamagic",
+                "uuid": "a6a442a1-4331-4984-85b1-a2f981adf001"
+            }
+        ]
+    },
+    {
         "name": "Moderator",
         "color": "5555FF",
         "people": [
@@ -60,6 +74,10 @@
             {
                 "name": "xchippy",
                 "uuid": "93033064-d061-4846-a707-868dfd2d7c0f"
+            },
+            {
+                "name": "widiwow",
+                "uuid": "d61b733f-1c28-498e-889b-dd0e061686ef"
             }
         ]
     },
@@ -68,25 +86,20 @@
         "color": "FFFF55",
         "people": [
             {
-                "name": "Bluswimmer2",
-                "uuid": "6724b07c-a44a-40b0-a16b-11268e3a6546"
+                "name": "alicehiiragi",
+                "uuid": "96fccae3-fc49-43ca-866b-0fab8ec97ad0"
             },
             {
                 "name": "ChaoRequiem",
                 "uuid": "8f05decd-3a7d-488f-8ec1-b2df91fbd2fc"
             },
             {
-                "name": "CreativeSpell",
-                "uuid": "33b9d0cf-7b73-4821-8327-dc1f5d6bb63a"
+                "name": "mikedarlington",
+                "uuid": "75be6f2a-b68d-41bb-90aa-2cfd194476bf"
             },
             {
-                "name": "Ducking",
-                "uuid": "273da7f5-e840-40e6-836a-a687b4f92e5f"
-            },
-            {
-                "name": "wersty",
-                "uuid": "f168f420-2a62-4bf6-908e-680456afda59",
-                "role": "QA Manager"
+                "name": "Wootenator",
+                "uuid": "bbaa7178-5814-40ae-b91f-df652152838a"
             }
         ]
     }
