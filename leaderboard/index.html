@@ -1,0 +1,214 @@
+---
+layout: default
+title: Leaderboard
+---
+
+<div class="centered" id="compare-input">
+    <form action="#" onsubmit="compareStats()">
+        <input type="text" id="player1">
+        <input type="text" id="player2">
+    </form>
+    <button type="button" onclick="compareStats()">Compare!</button>
+</div>
+
+<br>
+
+<div id="player-results-container">
+    <div class="player-results-child" id="player1-results"></div>
+    <span></span>
+    <div class="player-results-child" id="player2-results"></div>
+</div>
+
+<br>
+
+<table id="leaderboard-table">
+    <tr>
+        <th>Player</th>
+        <th>Kills</th>
+        <th>Deaths</th>
+        <th>Wins</th>
+        <th>Flawless Wins</th>
+        <th>Losses</th>
+        <th>Play Time</th>
+        <th>Tokens</th>
+    </tr>
+    <tr>
+        <td colspan="8" class="centered">Loading...</td>
+    </tr>
+</table>
+
+<div class="btn-group">
+
+</div>
+
+<script>
+    const apiUrl = "http://localhost:15613";
+    const Comparator = Object.freeze({
+        NONE: Symbol("none"),
+        GREATER: Symbol("greater"),
+        LESS: Symbol("less")
+    });
+    const formattedStats = {
+        // "Player": Comparator.NONE,
+        "Kills": Comparator.GREATER,
+        "Deaths": Comparator.LESS,
+        "Wins": Comparator.GREATER,
+        "Flawless Wins": Comparator.GREATER,
+        "Losses": Comparator.LESS,
+        "Play Time": Comparator.NONE,
+        "Tokens": Comparator.GREATER
+    };
+
+    function dhm(ms) {
+        const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+        const daysms = ms % (24 * 60 * 60 * 1000);
+        const hours = Math.floor(daysms / (60 * 60 * 1000));
+        const hoursms = ms % (60 * 60 * 1000);
+        const minutes = Math.floor(hoursms / (60 * 1000));
+        const minutesms = ms % (60 * 1000);
+        const sec = Math.floor(minutesms / 1000);
+        return `${days}d ${hours}h ${minutes}m`;
+    }
+
+    function assembleTable() {
+        let table = document.getElementById("leaderboard-table");
+        let footer = table.createTFoot();
+        let row = footer.insertRow(0);
+
+    }
+
+    // function clearRows() {
+    //     Array.from(document.getElementById("leaderboard-table")).forEach(e => e.innerHTML = "");
+    // }
+
+    async function compareStats() {
+        Array.from(document.getElementsByClassName("player-results-child")).forEach(e => e.innerHTML = "");
+
+        let player1 = document.getElementById("player1").value;
+        let player2 = document.getElementById("player2").value;
+
+        if (player1.length == 0 || player2.length == 0) {
+            alert("Missing one or more input for player names");
+            return;
+        }
+
+        let player1Response = await fetch(`${apiUrl}/ssbstats?name=${player1}`);
+        let player2Response = await fetch(`${apiUrl}/ssbstats?name=${player2}`);
+
+        let player1Stats = await player1Response.json();
+        let player2Stats = await player2Response.json();
+
+        if (player1Stats.hasOwnProperty("error") || player2Stats.hasOwnProperty("error")) {
+            alert("Could not get stats of one or more players");
+            return;
+        }
+
+        const sections = document.getElementsByClassName("player-results-child");
+        let leftPlayer = sections[0];
+        let rightPlayer = sections[1];
+
+        const leftHeader = document.createElement("h3");
+        const rightHeader = document.createElement("h3");
+        leftHeader.classList.add("centered");
+        leftHeader.innerHTML = `${player1Stats.playerName}'s Stats`;
+        rightHeader.classList.add("centered");
+        rightHeader.innerHTML = `${player2Stats.playerName}'s Stats`;
+        const br = document.createElement("br");
+        const br2 = document.createElement("br");
+        const leftTable = document.createElement("table");
+        leftTable.classList.add("player-results-table");
+
+        const rightTable = document.createElement("table");
+        rightTable.classList.add("player-results-table");
+
+        for (const [formattedStat, comparator] of Object.entries(formattedStats)) {
+            // console.log(formattedStat);
+            const leftTableRow = leftTable.insertRow();
+            const leftFirstCell = leftTableRow.insertCell();
+            leftFirstCell.innerHTML = formattedStat;
+
+            const leftSecondCell = leftTableRow.insertCell();
+
+            const rightTableRow = rightTable.insertRow();
+            const rightFirstCell = rightTableRow.insertCell();
+            rightFirstCell.innerHTML = formattedStat;
+
+            const rightSecondCell = rightTableRow.insertCell();
+
+            let leftValue = player1Stats.stats[formattedStat] ?? 0;
+            leftSecondCell.innerHTML = leftValue;
+
+            let rightValue = player2Stats.stats[formattedStat] ?? 0;
+            rightSecondCell.innerHTML = rightValue;
+
+            let result;
+            switch (comparator) {
+                case Comparator.GREATER:
+                    result = leftValue > rightValue;
+                    break;
+                case Comparator.LESS:
+                    result = leftValue < rightValue;
+                    break;
+            }
+            if (typeof result === "boolean") {
+                if (result) {
+                    leftSecondCell.classList.add("greater-entry");
+                    rightSecondCell.classList.add("lesser-entry");
+                } else {
+                    leftSecondCell.classList.add("lesser-entry");
+                    rightSecondCell.classList.add("greater-entry");
+                }
+            }
+        }
+        leftPlayer.appendChild(leftHeader);
+        leftPlayer.appendChild(br);
+        leftPlayer.appendChild(leftTable);
+
+        rightPlayer.appendChild(rightHeader);
+        rightPlayer.appendChild(br2);
+        rightPlayer.appendChild(rightTable);
+    }
+
+    async function getPageAndAddToTable(page, amount, parameters) {
+        let table = document.getElementById("leaderboard-table");
+        let url = apiUrl + "/leaderboard";
+        let i = 0;
+        if (parameters)
+            if (Object.keys(parameters).length > 0) {
+                for (const [key, value] of Object.entries(parameters)) {
+                    if (i == 0)
+                        url += "?";
+                    else
+                        url += "&";
+                    url += `${key}=${value}`;
+                    i++;
+                }
+            }
+        console.log(url)
+        let response = await fetch(url);
+        let data = await response.json()
+            .then(data => {
+                console.log(data);
+                let allPlayerStats = data.playerStatistics;
+                for (let i = 0; i < Object.keys(allPlayerStats).length; i++) {
+                    let playerInfo = allPlayerStats[i].player;
+                    let playerStatistics = allPlayerStats[i].statistics;
+
+                    let row = table.insertRow(i + 1);
+                    row.insertCell().innerHTML = playerInfo.name;
+                    for (const [key, value] of Object.entries(playerStatistics)) {
+                        if (key === "Play Time") {
+                            let seconds = dhm(value);
+                            row.insertCell().innerHTML = seconds;
+                            continue;
+                        }
+                        let cell = row.insertCell();
+                        cell.innerHTML = value;
+                    }
+                }
+
+            });
+    }
+
+    getPageAndAddToTable(1, 100, undefined);
+</script>

@@ -1,0 +1,41 @@
+span {
+    width: 50px;
+}
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 3px solid black;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#player-results-container {
+    display: flex;
+    align-items: center;
+}
+
+.player-results-child {
+    border-collapse: collapse;
+    border: 1px solid black;
+    border-radius: 25px;
+    width: 50%;
+    /* display: inline-block; */
+}
+
+.player-results-table {
+    width: 25%;
+}
+
+.centered {
+    text-align: center;
+}
+
+.greater-entry {
+    color: green;
+}
+
+.lesser-entry {
+    color: red
+}
