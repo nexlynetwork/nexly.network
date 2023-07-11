@@ -5,8 +5,8 @@ title: Leaderboard
 
 <div class="centered" id="compare-input">
     <form action="#" onsubmit="compareStats()">
-        <input type="text" id="player1">
-        <input type="text" id="player2">
+        <input type="text" id="player1" placeholder="Player1...">
+        <input type="text" id="player2" placeholder="Player2...">
     </form>
     <button type="button" onclick="compareStats()">Compare!</button>
 </div>
@@ -21,6 +21,7 @@ title: Leaderboard
 
 <br>
 
+<p class="centered" id="loading-text" hidden>Loading...</p>
 <table id="leaderboard-table">
     <tr>
         <th>Player</th>
@@ -32,14 +33,14 @@ title: Leaderboard
         <th>Play Time</th>
         <th>Tokens</th>
     </tr>
-    <tr>
-        <td colspan="8" class="centered">Loading...</td>
-    </tr>
 </table>
 
-<div class="btn-group">
+<br>
 
-</div>
+<button type="button" class="centered" id="prev-page" onclick="getPageAndAddToTable(--pageNumber, 10, {})">Prev Page</button>
+<button type="button" class="centered" id="next-page" onclick="getPageAndAddToTable(++pageNumber, 10, {})">Next Page</button>
+
+<p id="page-counter">Page 1/1</p>
 
 <script>
     const apiUrl = "http://localhost:15613";
@@ -59,6 +60,13 @@ title: Leaderboard
         "Tokens": Comparator.GREATER
     };
 
+    const prevBtn = document.getElementById("prev-page");
+    const nextBtn = document.getElementById("next-page");
+    const loadingElement = document.getElementById("loading-text");
+
+    let pageNumber = 1;
+    let totalData = 1;
+
     function dhm(ms) {
         const days = Math.floor(ms / (24 * 60 * 60 * 1000));
         const daysms = ms % (24 * 60 * 60 * 1000);
@@ -70,7 +78,7 @@ title: Leaderboard
         return `${days}d ${hours}h ${minutes}m`;
     }
 
-    function assembleTable() {
+    function reassembleTable() {
         let table = document.getElementById("leaderboard-table");
         let footer = table.createTFoot();
         let row = footer.insertRow(0);
@@ -90,6 +98,10 @@ title: Leaderboard
         if (player1.length == 0 || player2.length == 0) {
             alert("Missing one or more input for player names");
             return;
+        }
+
+        if (player1 === player2) {
+            alert("Why are you comparing yourself?\n\nWhy are you comparing yourself?");
         }
 
         let player1Response = await fetch(`${apiUrl}/ssbstats?name=${player1}`);
@@ -170,25 +182,28 @@ title: Leaderboard
     }
 
     async function getPageAndAddToTable(page, amount, parameters) {
+        loadingElement.hidden = false;
         let table = document.getElementById("leaderboard-table");
+        table.getElementsByTagName("tbody")[0].innerHTML = table.rows[0].innerHTML;
         let url = apiUrl + "/leaderboard";
+        if (page > 0) parameters["page"] = page;
         let i = 0;
-        if (parameters)
-            if (Object.keys(parameters).length > 0) {
-                for (const [key, value] of Object.entries(parameters)) {
-                    if (i == 0)
-                        url += "?";
-                    else
-                        url += "&";
-                    url += `${key}=${value}`;
-                    i++;
-                }
+        if (Object.keys(parameters).length > 0) {
+            for (const [key, value] of Object.entries(parameters)) {
+                if (i == 0)
+                    url += "?";
+                else
+                    url += "&";
+                url += `${key}=${value}`;
+                i++;
             }
+        }
         console.log(url)
         let response = await fetch(url);
         let data = await response.json()
             .then(data => {
                 console.log(data);
+                totalData = data.totalData;
                 let allPlayerStats = data.playerStatistics;
                 for (let i = 0; i < Object.keys(allPlayerStats).length; i++) {
                     let playerInfo = allPlayerStats[i].player;
@@ -208,7 +223,12 @@ title: Leaderboard
                 }
 
             });
+        let totalPages = Math.ceil(totalData / amount);
+        loadingElement.hidden = true;
+        prevBtn.disabled = page == 1;
+        nextBtn.disabled = page == totalPages;
+        document.getElementById("page-counter").innerHTML = `Page ${pageNumber}/${totalPages}`;
     }
 
-    getPageAndAddToTable(1, 100, undefined);
+    getPageAndAddToTable(pageNumber, 10, {});
 </script>
