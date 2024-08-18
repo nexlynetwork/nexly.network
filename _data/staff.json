@@ -48,10 +48,6 @@
             {
                 "name": "Bluswimmer2",
                 "uuid": "6724b07c-a44a-40b0-a16b-11268e3a6546"
-            },
-            {
-                "name": "Metamagic",
-                "uuid": "a6a442a1-4331-4984-85b1-a2f981adf001"
             }
         ]
     },
@@ -62,10 +58,6 @@
             {
                 "name": "chronoforce",
                 "uuid": "cfdefe2c-5393-49d5-9f7b-9648d62794af"
-            },
-            {
-                "name": "Dyllan",
-                "uuid": "0074cd05-c7f2-4b34-b8e9-f59ff2f9c49a"
             },
             {
                 "name": "TheElementalBros",
@@ -86,16 +78,16 @@
         "color": "FFFF55",
         "people": [
             {
-                "name": "alicehiiragi",
-                "uuid": "96fccae3-fc49-43ca-866b-0fab8ec97ad0"
-            },
-            {
                 "name": "ChaoRequiem",
                 "uuid": "8f05decd-3a7d-488f-8ec1-b2df91fbd2fc"
             },
             {
                 "name": "mikedarlington",
                 "uuid": "75be6f2a-b68d-41bb-90aa-2cfd194476bf"
+            },
+            {
+                "name": "Tommbu",
+                "uuid": "99f1ca10-69b7-4fdf-b9f9-e85ee9ebd3b7"
             },
             {
                 "name": "Wootenator",
