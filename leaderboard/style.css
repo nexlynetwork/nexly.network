@@ -11,6 +11,10 @@ table {
     margin-right: auto;
 }
 
+tr:nth-child(even) {
+    background-color: lightgray;
+}
+
 #player-results-container {
     display: flex;
     align-items: center;
@@ -38,4 +42,16 @@ table {
 
 .lesser-entry {
     color: red
+}
+
+.clickable {
+    cursor: pointer
+}
+
+
+
+.player-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

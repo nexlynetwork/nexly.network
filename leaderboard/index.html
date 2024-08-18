@@ -15,7 +15,7 @@ title: Leaderboard
 
 <div id="player-results-container">
     <div class="player-results-child" id="player1-results"></div>
-    <span></span>
+    <span> </span>
     <div class="player-results-child" id="player2-results"></div>
 </div>
 
@@ -25,20 +25,20 @@ title: Leaderboard
 <table id="leaderboard-table">
     <tr>
         <th>Player</th>
-        <th>Kills</th>
-        <th>Deaths</th>
-        <th>Wins</th>
-        <th>Flawless Wins</th>
-        <th>Losses</th>
-        <th>Play Time</th>
-        <th>Tokens</th>
+        <th class="clickable" onclick="sortTable('kills')">Kills</th>
+        <th class="clickable" onclick="sortTable('deaths')">Deaths</th>
+        <th class="clickable" onclick="sortTable('wins')">Wins</th>
+        <th class="clickable" onclick="sortTable('flawless wins')">Flawless Wins</th>
+        <th class="clickable" onclick="sortTable('losses')">Losses</th>
+        <th class="clickable" onclick="sortTable('play time')">Play Time</th>
+        <th class="clickable" onclick="sortTable('tokens')">Tokens</th>
     </tr>
 </table>
 
 <br>
 
-<button type="button" class="centered" id="prev-page" onclick="getPageAndAddToTable(--pageNumber, 10, {})">Prev Page</button>
-<button type="button" class="centered" id="next-page" onclick="getPageAndAddToTable(++pageNumber, 10, {})">Next Page</button>
+<button type="button" class="centered" id="prev-page" onclick="getPageAndAddToTable(pageNumber - 1, 10, {})">Prev Page</button>
+<button type="button" class="centered" id="next-page" onclick="getPageAndAddToTable(pageNumber + 1, 10, {})">Next Page</button>
 
 <p id="page-counter">Page 1/1</p>
 
@@ -49,23 +49,45 @@ title: Leaderboard
         GREATER: Symbol("greater"),
         LESS: Symbol("less")
     });
-    const formattedStats = {
+    const SortType = Object.freeze({
+        ASCENDING: Symbol("asc"),
+        DESCENDING: Symbol("desc")
+    });
+    
+    const statComparisonMap = {
         // "Player": Comparator.NONE,
         "Kills": Comparator.GREATER,
-        "Deaths": Comparator.LESS,
+        "Deaths": Comparator.NONE,
+        "KDR": Comparator.GREATER,
         "Wins": Comparator.GREATER,
         "Flawless Wins": Comparator.GREATER,
-        "Losses": Comparator.LESS,
-        "Play Time": Comparator.NONE,
+        "Losses": Comparator.NONE,
+        "Play Time": Comparator.GREATER,
         "Tokens": Comparator.GREATER
     };
+
+    const leaderboardStatMap = [
+        "Kills",
+        "Deaths",
+        "Wins",
+        "Flawless Wins",
+        "Losses",
+        "Play Time",
+        "Tokens"
+    ];
 
     const prevBtn = document.getElementById("prev-page");
     const nextBtn = document.getElementById("next-page");
     const loadingElement = document.getElementById("loading-text");
 
-    let pageNumber = 1;
+    const minecraftBody = (uuid) => `https://minotar.net/armor/body/${uuid}/100.png`;
+
     let totalData = 1;
+
+    // parameters
+    let pageNumber = 1;
+    let sortBy = "kills";
+    let sortDirection = SortType.DESCENDING;
 
     function dhm(ms) {
         const days = Math.floor(ms / (24 * 60 * 60 * 1000));
@@ -76,6 +98,36 @@ title: Leaderboard
         const minutesms = ms % (60 * 1000);
         const sec = Math.floor(minutesms / 1000);
         return `${days}d ${hours}h ${minutes}m`;
+    }
+
+    function waitForImage(imgElem) {
+        return new Promise(res => {
+            if (imgElem.complete) {
+                return res();
+            }
+            imgElem.onload = () => res();
+            imgElem.onerror = () => res();
+        })
+    };
+
+    function getSortingString(sortDirection) {
+        switch (sortDirection) {
+            case SortType.ASCENDING:
+                return "asc";
+            case SortType.DESCENDING:
+                return "desc";
+        }
+    }
+
+    function formatStat(stat, value) {
+        if (stat === "Play Time") {
+            return dhm(value);
+        }
+        else if (stat === "KDR") {
+            return Number(value).toFixed(2);
+        }
+
+        return value;
     }
 
     function reassembleTable() {
@@ -90,8 +142,6 @@ title: Leaderboard
     // }
 
     async function compareStats() {
-        Array.from(document.getElementsByClassName("player-results-child")).forEach(e => e.innerHTML = "");
-
         let player1 = document.getElementById("player1").value;
         let player2 = document.getElementById("player2").value;
 
@@ -115,12 +165,21 @@ title: Leaderboard
             return;
         }
 
+        player1Stats.stats["KDR"] = (player1Stats.stats.Kills ?? 0) / (player1Stats.stats.Deaths ?? 1);
+        player2Stats.stats["KDR"] = (player2Stats.stats.Kills ?? 0) / (player2Stats.stats.Deaths ?? 1);
+
         const sections = document.getElementsByClassName("player-results-child");
         let leftPlayer = sections[0];
         let rightPlayer = sections[1];
 
         const leftHeader = document.createElement("h3");
+        const leftImage = document.createElement("img");
+        leftImage.src = minecraftBody(player1Stats.uuid);
+        leftImage.classList.add("player-img");
         const rightHeader = document.createElement("h3");
+        const rightImage = document.createElement("img");
+        rightImage.src = minecraftBody(player2Stats.uuid);
+        rightImage.classList.add("player-img");
         leftHeader.classList.add("centered");
         leftHeader.innerHTML = `${player1Stats.playerName}'s Stats`;
         rightHeader.classList.add("centered");
@@ -133,7 +192,7 @@ title: Leaderboard
         const rightTable = document.createElement("table");
         rightTable.classList.add("player-results-table");
 
-        for (const [formattedStat, comparator] of Object.entries(formattedStats)) {
+        for (const [formattedStat, comparator] of Object.entries(statComparisonMap)) {
             // console.log(formattedStat);
             const leftTableRow = leftTable.insertRow();
             const leftFirstCell = leftTableRow.insertCell();
@@ -148,10 +207,7 @@ title: Leaderboard
             const rightSecondCell = rightTableRow.insertCell();
 
             let leftValue = player1Stats.stats[formattedStat] ?? 0;
-            leftSecondCell.innerHTML = leftValue;
-
             let rightValue = player2Stats.stats[formattedStat] ?? 0;
-            rightSecondCell.innerHTML = rightValue;
 
             let result;
             switch (comparator) {
@@ -171,37 +227,58 @@ title: Leaderboard
                     rightSecondCell.classList.add("greater-entry");
                 }
             }
+            leftSecondCell.innerHTML = formatStat(formattedStat, leftValue);
+            rightSecondCell.innerHTML = formatStat(formattedStat, rightValue);
         }
+        await waitForImage(leftImage);
+        await waitForImage(rightImage);
+
+        Array.from(document.getElementsByClassName("player-results-child")).forEach(e => e.innerHTML = "");
+
         leftPlayer.appendChild(leftHeader);
+        leftPlayer.appendChild(leftImage);
         leftPlayer.appendChild(br);
         leftPlayer.appendChild(leftTable);
 
         rightPlayer.appendChild(rightHeader);
+        rightPlayer.appendChild(rightImage);
         rightPlayer.appendChild(br2);
         rightPlayer.appendChild(rightTable);
     }
 
-    async function getPageAndAddToTable(page, amount, parameters) {
-        loadingElement.hidden = false;
-        let table = document.getElementById("leaderboard-table");
-        table.getElementsByTagName("tbody")[0].innerHTML = table.rows[0].innerHTML;
-        let url = apiUrl + "/leaderboard";
-        if (page > 0) parameters["page"] = page;
-        let i = 0;
-        if (Object.keys(parameters).length > 0) {
-            for (const [key, value] of Object.entries(parameters)) {
-                if (i == 0)
-                    url += "?";
-                else
-                    url += "&";
-                url += `${key}=${value}`;
-                i++;
-            }
+    /**
+     * Sorts the table using the input sorting method and resets the table to page 1.
+     * If the input sorting method is the same as the current method, the method simply
+     * toggles the sorting direction.
+     * 
+     * @param {string} The method to sort
+     */
+    function sortTable(sortingBy) {
+        if (sortBy === sortingBy) { // if the new sorting value is same as old, simply toggle whether it is ascending or descending
+            if (sortDirection === SortType.ASCENDING)
+                sortDirection = SortType.DESCENDING;
+            else
+                sortDirection = SortType.ASCENDING;
+        } else {
+            sortBy = sortingBy;
+            sortDirection = SortType.DESCENDING;
         }
+        // set the table to the first page
+        getPageAndAddToTable(1, 10);
+    }
+
+    async function getPageAndAddToTable(page, amount) {
+        loadingElement.hidden = false;
+        pageNumber = page;
+        let table = document.getElementById("leaderboard-table");
+        let url = `${apiUrl}/leaderboard?page=${page}&sortBy=${sortBy}&sortType=${getSortingString(sortDirection)}`;
+        let i = 0;
         console.log(url)
         let response = await fetch(url);
         let data = await response.json()
             .then(data => {
+                        // clear table
+                table.getElementsByTagName("tbody")[0].innerHTML = table.rows[0].innerHTML;
                 console.log(data);
                 totalData = data.totalData;
                 let allPlayerStats = data.playerStatistics;
@@ -211,15 +288,12 @@ title: Leaderboard
 
                     let row = table.insertRow(i + 1);
                     row.insertCell().innerHTML = playerInfo.name;
-                    for (const [key, value] of Object.entries(playerStatistics)) {
-                        if (key === "Play Time") {
-                            let seconds = dhm(value);
-                            row.insertCell().innerHTML = seconds;
-                            continue;
-                        }
+
+                    leaderboardStatMap.forEach(formattedStat => {
+                        let value = playerStatistics[formattedStat] ?? 0;
                         let cell = row.insertCell();
-                        cell.innerHTML = value;
-                    }
+                        cell.innerHTML = formatStat(formattedStat, value);
+                    });
                 }
 
             });
